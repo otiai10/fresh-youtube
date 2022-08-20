@@ -1,0 +1,24 @@
+name: Deno CI
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Event check
+      run: echo ${{ github.event_name }}
+    - name: Git Checkout
+      uses: actions/checkout@v2
+    - uses: denolib/setup-deno@v2
+      with:
+        deno-version: '1.24.3'
+    - name: Print deno version
+      run: deno --version
+    - name: Lint
+      run: deno fmt --check **/*.ts
+    - name: Run tests
+      run: deno test
