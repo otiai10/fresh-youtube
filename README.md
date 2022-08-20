@@ -1,6 +1,7 @@
 # fresh-youtube
 
 [![Deno CI](https://github.com/otiai10/fresh-youtube/actions/workflows/deno-ci.yml/badge.svg)](https://github.com/otiai10/fresh-youtube/actions/workflows/deno-ci.yml)
+[![Deploy Example](https://github.com/otiai10/fresh-youtube/actions/workflows/deploy-example.yml/badge.svg)](https://fresh-youtube.deno.dev/)
 
 View component and controller of
 [YouTube Player API](https://developers.google.com/youtube/iframe_api_reference),
@@ -15,7 +16,7 @@ cd ./example
 deno task start
 ```
 
-<img src="https://user-images.githubusercontent.com/931554/185740364-cdfde559-1dd4-4547-bc3c-ad25e577c04a.png" width="60%" alt="example" />
+<a href="https://fresh-youtube.deno.dev/"><img src="https://user-images.githubusercontent.com/931554/185740364-cdfde559-1dd4-4547-bc3c-ad25e577c04a.png" width="60%" alt="example" /></a>
 
 # Example
 
