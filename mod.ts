@@ -1,3 +1,2 @@
-export function foo(): string {
-  return "hello";
-}
+export * from "./src/delegate/index.ts";
+export * from "./src/view/index.tsx";
