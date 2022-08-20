@@ -52,7 +52,7 @@ export class YouTubePlayerDelegate
    */
   constructor(option?: YouTubePlayerDelegateOptions) {
     if (option?.stateUpdater) this.__notifier__ = option.stateUpdater;
-    if (option?.initialVideoID) this.__initialVideoID__;
+    if (option?.initialVideoID) this.__initialVideoID__ = option.initialVideoID;
   }
 
   /**
