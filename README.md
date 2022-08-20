@@ -2,9 +2,9 @@
 
 ```tsx
 import {
-  YouTubePlayerView,
   YouTubePlayerDelegate,
-} from "https://deno.land/x/fresh-youtube@0.1.0/"
+  YouTubePlayerView,
+} from "https://deno.land/x/fresh-youtube@0.1.0/";
 
 export default function MyIsland(props: YourIslandProps) {
   const delegate = useMemo(() => new YouTubePlayerDelegate(), []);

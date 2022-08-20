@@ -19,6 +19,6 @@ jobs:
     - name: Print deno version
       run: deno --version
     - name: Lint
-      run: deno fmt --check **/*.ts
+      run: deno fmt --check ./
     - name: Run tests
       run: deno test

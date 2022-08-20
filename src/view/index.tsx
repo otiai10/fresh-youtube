@@ -1,10 +1,10 @@
 /** @jsx h */
-import type {} from "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/youtube/index.d.ts"
-import { h, RefCallback } from "https://esm.sh/preact@10.10.6"
+import type {} from "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/youtube/index.d.ts";
+import { h, RefCallback } from "https://esm.sh/preact@10.10.6";
 
 import {
-  YouTubePlayerEventListener,
   YouTubePlayerController,
+  YouTubePlayerEventListener,
 } from "../delegate/index.ts";
 
 /**
@@ -18,7 +18,8 @@ import {
  * If it's annoying for you to implement them, you can just use
  * `YouTubePlayerDelegate` class as a short-handed implementation.
  */
-export interface YouTubePlayerViewProps extends h.JSX.HTMLAttributes<HTMLDivElement> {
+export interface YouTubePlayerViewProps
+  extends h.JSX.HTMLAttributes<HTMLDivElement> {
   eventListener?: YouTubePlayerEventListener;
   controller?: YouTubePlayerController;
   delegate?: YouTubePlayerEventListener & YouTubePlayerController;
@@ -29,13 +30,16 @@ export function YouTubePlayerView(props: YouTubePlayerViewProps) {
   const onDivLoaded: RefCallback<HTMLDivElement> = (
     ref: HTMLDivElement | null,
   ) => {
-
     // {{{ Validation
     let { context, eventListener, controller, delegate } = props;
     if (!context) context = window;
-    if (delegate) controller = delegate; eventListener = delegate;
-    if (!eventListener || !controller)
-      throw new Error('Both `eventListener` and `controller` are required, or provide `delegate`');
+    if (delegate) controller = delegate;
+    eventListener = delegate;
+    if (!eventListener || !controller) {
+      throw new Error(
+        "Both `eventListener` and `controller` are required, or provide `delegate`",
+      );
+    }
     // }}}
 
     // {{{ Definition of init steps.
@@ -45,11 +49,14 @@ export function YouTubePlayerView(props: YouTubePlayerViewProps) {
         const player = new yt.Player(ref, {
           width: "100%",
           height: "100%",
-          videoId: (controller!.initialVideoID) ? controller?.initialVideoID() : null,
+          videoId: (controller!.initialVideoID)
+            ? controller?.initialVideoID()
+            : null,
           events: {
             onStateChange: (ev) => eventListener!.onStateChange(ev),
             onError: (ev) => eventListener!.onError(ev),
-            onReady: (ev) => (eventListener!.onReady) ? eventListener!.onReady(ev) : null,
+            onReady: (ev) =>
+              (eventListener!.onReady) ? eventListener!.onReady(ev) : null,
           },
         } as YT.PlayerOptions);
         controller!.onPlayerLoaded(player);
