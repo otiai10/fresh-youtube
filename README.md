@@ -20,7 +20,7 @@ deno task start
 # Example
 
 See
-[./example/islands/ExampleIsland.ts](https://github.com/otiai10/fresh-youtube/blob/main/example/islands/ExampleIsland.ts).
+[./example/islands/ExampleIsland.ts](https://github.com/otiai10/fresh-youtube/blob/main/example/islands/ExampleIsland.tsx).
 
 ```tsx
 /** @jsx h */
