@@ -33,8 +33,7 @@ export function YouTubePlayerView(props: YouTubePlayerViewProps) {
     // {{{ Validation
     let { context, eventListener, controller, delegate } = props;
     if (!context) context = window;
-    if (delegate) controller = delegate;
-    eventListener = delegate;
+    if (delegate) controller = eventListener = delegate;
     if (!eventListener || !controller) {
       throw new Error(
         "Both `eventListener` and `controller` are required, or provide `delegate`",
