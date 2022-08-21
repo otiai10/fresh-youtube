@@ -6,7 +6,7 @@ import {
   PlayerState,
   YouTubePlayerDelegate,
   YouTubePlayerView,
-} from "https://deno.land/x/fresh_youtube@0.1.1/mod.ts";
+} from "https://deno.land/x/fresh_youtube@0.2.0/mod.ts";
 
 export default function ExampleIsland() {
   // This is what we already know: useState to see dynamic value.
