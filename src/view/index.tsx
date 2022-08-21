@@ -58,7 +58,7 @@ export function YouTubePlayerView(props: YouTubePlayerViewProps) {
               (eventListener!.onReady) ? eventListener!.onReady(ev) : null,
           },
         } as YT.PlayerOptions);
-        controller!.onPlayerLoaded(player);
+        controller!.__onPlayerLoaded__(player);
       };
     };
     // }}}
@@ -72,7 +72,7 @@ export function YouTubePlayerView(props: YouTubePlayerViewProps) {
   };
 
   return (
-    <div style={props.style}>
+    <div {...props}>
       <div id="player" ref={onDivLoaded}></div>
     </div>
   );

@@ -26,7 +26,8 @@ export interface YouTubePlayerEventListener {
 }
 
 export interface YouTubePlayerController {
-  onPlayerLoaded(player: YT.Player): void;
+  __onPlayerLoaded__(player: YT.Player): void;
+  addPlayerOnReadyListener(callback: () => void): void;
   initialVideoID?(): string;
   autoPlay?(): boolean;
 }
@@ -45,6 +46,7 @@ export class YouTubePlayerDelegate
   protected __player__?: YT.Player;
   protected __notifier__?: StateUpdater<PlayerState>;
   protected __initialVideoID__?: string;
+  public __onPlayerReadyCallbackFun__?: () => void;
   // }}}
 
   /**
@@ -74,6 +76,7 @@ export class YouTubePlayerDelegate
    * @implement YouTubePlayerEventListener
    */
   onError(ev: YT.OnErrorEvent) {
+    console.error("[ERROR] fresh-youtube:YouTubePlayerDelegate", ev);
   }
 
   /**
@@ -81,6 +84,7 @@ export class YouTubePlayerDelegate
    * @implement YouTubePlayerEventListener
    */
   onReady(ev: YT.PlayerEvent) {
+    if (this.__onPlayerReadyCallbackFun__) this.__onPlayerReadyCallbackFun__();
   }
   // }}}
 
@@ -89,8 +93,11 @@ export class YouTubePlayerDelegate
    * @param {YT.Player} player
    * @implement YouTubePlayerController
    */
-  onPlayerLoaded(player: YT.Player): void {
+  __onPlayerLoaded__(player: YT.Player): void {
     this.__player__ = player;
+  }
+  addPlayerOnReadyListener(callback: () => void): void {
+    this.__onPlayerReadyCallbackFun__ = callback;
   }
 
   /**
@@ -124,7 +131,8 @@ export class YouTubePlayerDelegate
     startSeconds?: number,
     suggestedQuality?: YT.SuggestedVideoQuality,
   ): void {
-    this.__player__?.loadVideoById(videoId, startSeconds, suggestedQuality);
+    console.log(this.__player__, this.__player__?.loadVideoById);
+    this.__player__!.loadVideoById(videoId, startSeconds, suggestedQuality);
   }
   cue(
     videoId: string,
