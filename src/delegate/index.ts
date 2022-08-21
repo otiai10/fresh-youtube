@@ -95,16 +95,13 @@ export class YouTubePlayerDelegate
 
   /**
    * Specifies the video which will be played immediately after it's ready.
-   * By default, "YouTube Developers Live: Embedded Web Player Customization"
-   * provided by https://www.youtube.com/googlecode. Enjoy ;)
    * @returns {string}
    * @see https://developers.google.com/youtube/iframe_api_reference
    * @implement YouTubePlayerController
    */
   initialVideoID(): string {
     if (this.__initialVideoID__) return this.__initialVideoID__;
-    const officialVideoID = "M7lc1UVf-VE";
-    return officialVideoID;
+    return "";
   }
 
   // {{{ TODO: Satisfy basic usage.
