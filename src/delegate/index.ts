@@ -104,7 +104,12 @@ export class YouTubePlayerDelegate
     return "";
   }
 
-  // {{{ TODO: Satisfy basic usage.
+  /**
+   * Player methods:
+   * @see https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/youtube/index.d.ts#L703-L1020
+   */
+
+  // {{{ basic control
   play(): void {
     this.__player__?.playVideo();
   }
@@ -113,6 +118,84 @@ export class YouTubePlayerDelegate
   }
   pause(): void {
     this.__player__?.pauseVideo();
+  }
+  load(
+    videoId: string,
+    startSeconds?: number,
+    suggestedQuality?: YT.SuggestedVideoQuality,
+  ): void {
+    this.__player__?.loadVideoById(videoId, startSeconds, suggestedQuality);
+  }
+  cue(
+    videoId: string,
+    startSeconds?: number,
+    suggestedQuality?: YT.SuggestedVideoQuality,
+  ): void {
+    this.__player__?.cueVideoById(videoId, startSeconds, suggestedQuality);
+  }
+  next(): void {
+    this.__player__?.nextVideo();
+  }
+  prev(): void {
+    this.__player__?.previousVideo();
+  }
+  // }}}
+
+  // Mute control
+  get muted(): boolean {
+    return this.__player__!.isMuted();
+  }
+  set muted(yes: boolean) {
+    (yes) ? this.__player__?.mute() : this.__player__?.unMute();
+  }
+
+  // Volume control
+  set volume(vol: number) {
+    this.__player__?.setVolume(vol);
+  }
+  get volume(): number {
+    return this.__player__!.getVolume();
+  }
+
+  // currentTime control
+  get currentTime(): number {
+    return this.__player__!.getCurrentTime();
+  }
+  set currentTime(seconds: number) {
+    this.__player__?.seekTo(seconds, true);
+  }
+
+  // Duration
+  get duration(): number {
+    return this.__player__!.getDuration();
+  }
+
+  // State control
+  get state(): PlayerState {
+    return this.__player__!.getPlayerState();
+  }
+
+  /**
+   * `progress` is a shorthanded expression for the rate of progress,
+   * expressed in percentage format.
+   * Value must be between 0~100.
+   */
+  get progress(): number {
+    return Math.round(100 * this.currentTime / this.duration);
+  }
+  set progress(percentage: number) {
+    if (percentage < 0) percentage = 0;
+    if (percentage > 100) percentage = 100;
+    const sec = this.duration * (percentage / 100);
+    this.__player__?.seekTo(Math.round(sec), true);
+  }
+
+  /**
+   * DO NOT USE.
+   * Removes ths <iframe> of the player.
+   */
+  __destroy__(): void {
+    this.__player__?.destroy();
   }
   // }}}
 }
