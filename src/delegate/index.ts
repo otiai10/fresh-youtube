@@ -46,7 +46,9 @@ export class YouTubePlayerDelegate
   protected __notifier__?: StateUpdater<PlayerState>;
   protected __initialVideoID__?: string;
   private __onPlayerReadyPromise__?: Promise<YT.Player>;
-  private __onPlayerReadyPromiseResolve___?: (p: YT.Player | PromiseLike<YT.Player>) => void;
+  private __onPlayerReadyPromiseResolve___?: (
+    p: YT.Player | PromiseLike<YT.Player>,
+  ) => void;
   // }}}
 
   /**
@@ -55,7 +57,7 @@ export class YouTubePlayerDelegate
   constructor(option?: YouTubePlayerDelegateOptions) {
     if (option?.stateUpdater) this.__notifier__ = option.stateUpdater;
     if (option?.initialVideoID) this.__initialVideoID__ = option.initialVideoID;
-    this.__onPlayerReadyPromise__ = new Promise<YT.Player>(resolve => {
+    this.__onPlayerReadyPromise__ = new Promise<YT.Player>((resolve) => {
       this.__onPlayerReadyPromiseResolve___ = resolve;
     });
   }
