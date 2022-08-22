@@ -27,7 +27,6 @@ export interface YouTubePlayerEventListener {
 
 export interface YouTubePlayerController {
   __onPlayerLoaded__(player: YT.Player): void;
-  addPlayerOnReadyListener(callback: () => void): void;
   initialVideoID?(): string;
   autoPlay?(): boolean;
 }
@@ -46,7 +45,8 @@ export class YouTubePlayerDelegate
   protected __player__?: YT.Player;
   protected __notifier__?: StateUpdater<PlayerState>;
   protected __initialVideoID__?: string;
-  public __onPlayerReadyCallbackFun__?: () => void;
+  private __onPlayerReadyPromise__?: Promise<YT.Player>;
+  private __onPlayerReadyPromiseResolve___?: (p: YT.Player | PromiseLike<YT.Player>) => void;
   // }}}
 
   /**
@@ -55,6 +55,9 @@ export class YouTubePlayerDelegate
   constructor(option?: YouTubePlayerDelegateOptions) {
     if (option?.stateUpdater) this.__notifier__ = option.stateUpdater;
     if (option?.initialVideoID) this.__initialVideoID__ = option.initialVideoID;
+    this.__onPlayerReadyPromise__ = new Promise<YT.Player>(resolve => {
+      this.__onPlayerReadyPromiseResolve___ = resolve;
+    });
   }
 
   /**
@@ -84,7 +87,7 @@ export class YouTubePlayerDelegate
    * @implement YouTubePlayerEventListener
    */
   onReady(ev: YT.PlayerEvent) {
-    if (this.__onPlayerReadyCallbackFun__) this.__onPlayerReadyCallbackFun__();
+    this.__onPlayerReadyPromiseResolve___!(this.__player__!);
   }
   // }}}
 
@@ -96,8 +99,8 @@ export class YouTubePlayerDelegate
   __onPlayerLoaded__(player: YT.Player): void {
     this.__player__ = player;
   }
-  addPlayerOnReadyListener(callback: () => void): void {
-    this.__onPlayerReadyCallbackFun__ = callback;
+  get ready(): Promise<YT.Player> {
+    return this.__onPlayerReadyPromise__!;
   }
 
   /**
