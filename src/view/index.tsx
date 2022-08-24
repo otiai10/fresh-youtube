@@ -26,6 +26,11 @@ export interface YouTubePlayerViewProps
   context?: Window & typeof globalThis;
 }
 
+/**
+ * YouTubePlayerView is just a view component to be rendered and
+ * responsible to delegate YT.Player event handling and control
+ * to stuff given in `props: YouTubePlayerViewProps`.
+ */
 export function YouTubePlayerView(props: YouTubePlayerViewProps) {
   const onDivLoaded: RefCallback<HTMLDivElement> = (
     ref: HTMLDivElement | null,

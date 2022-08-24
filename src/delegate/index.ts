@@ -1,9 +1,11 @@
 import type {} from "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/master/types/youtube/index.d.ts";
 import { StateUpdater } from "https://esm.sh/preact@10.10.6/hooks/src/index.d.ts";
 
-// {{{ FIXME: Better to extend existing default definition by YT.
-// export const PlayerState = YT.PlayerState;
-// export type PlayerState = YT.PlayerState;
+/**
+ * State of video player.
+ * PlayerState is exactly same as what defined in official YT.PlayerState.
+ * FIXME: Better to extend existing default definition by YT.
+ */
 export enum PlayerState {
   UNSTARTED = -1,
   ENDED = 0,
@@ -70,6 +72,7 @@ export class YouTubePlayerDelegate
   // }
 
   /**
+   * Event fired when the player's state changes.
    * @param {YT.OnStateChangeEvent} ev
    * @implement YouTubePlayerEventListener
    */
@@ -77,6 +80,7 @@ export class YouTubePlayerDelegate
     if (this.__notifier__) this.__notifier__(ev.target.getPlayerState());
   }
   /**
+   * Event fired when an error in the player occurs.
    * @param {YT.OnErrorEvent} ev
    * @implement YouTubePlayerEventListener
    */
@@ -85,12 +89,20 @@ export class YouTubePlayerDelegate
   }
 
   /**
+   * Event fired when a player has finished loading and is ready to begin receiving API calls.
    * @param {YT.PlayerEvent} ev
    * @implement YouTubePlayerEventListener
    */
   onReady(ev: YT.PlayerEvent) {
-    this.__onPlayerReadyPromiseResolve___!(this.__player__!);
+    this.__onPlayerReadyPromiseResolve___!(ev.target);
   }
+
+  // /**
+  //  * Event fired to indicate that the player has loaded, or unloaded, a module
+  //  * with exposed API methods. This currently only occurs for closed captioning.
+  //  */
+  // onApiChange(ev: YT.PlayerEvent) {}
+
   // }}}
 
   /**
